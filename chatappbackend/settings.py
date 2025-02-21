@@ -40,7 +40,8 @@ CSRF_TRUSTED_ORIGINS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    # 'django.contrib.admin',
+    'daphne',   
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -49,10 +50,12 @@ INSTALLED_APPS = [
     'chat',
     'requests',
     'rest_framework',
-    'rest_framework.authtoken',
+    # 'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
+    'accounts',
     'corsheaders',
     'mmapi',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -114,6 +117,9 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'user_id',
 }
 WSGI_APPLICATION = 'chatappbackend.wsgi.application'
+ASGI_APPLICATION = 'chatappbackend.asgi.application'
+
+AUTH_USER_MODEL = 'accounts.MMUser'
 
 
 # Database
@@ -168,6 +174,17 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MATTERMOST_API_TOKEN =  'c7ju71yd938uxpgtgsdkanxx6h'
-MATTERMOST_TOKEN_ID = 'nhy1fgd3j7bcdfmsgnzbff8rcr'
 MATTERMOST_API_URL = "http://localhost:80/api/v4"
+MATTERMOST_ADMIN_TOKEN = "8anagqhbciyzudaujgz3nbdbho"
+MATTERMOST_TOKEN_ID = "8n7xpbueq3b7mci77d7i6uynge"
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+        # For production, use Redis:
+        # 'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        # 'CONFIG': {
+        #     "hosts": [('127.0.0.1', 6379)],
+        # },
+    },
+}
